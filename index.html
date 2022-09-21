@@ -10,25 +10,19 @@
     <div id="app">
 
 
-        <div v-for="image in images">
-            <Transition>
-                <div v-if="currentImage == image.name" class="img-wrapper">
-                    <img :src="'/img/' + image.name">
-                    <svg id="l" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        @click="currentImage = image.leftNeighbor" v-if="image.leftNeighbor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    <svg id="r" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        @click="currentImage = image.rightNeighbor" v-if="image.rightNeighbor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M14 5l7 7m0 0l-7 7m7-7H3">
-                        </path>
-                    </svg>
-                </div>
-            </Transition>
+        <div class="img-wrapper">
+            <img :src="'/img/' + images[currentImage].name">
+            <svg id="l" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                @click="currentImage = images[currentImage].leftNeighbor" v-if="images[currentImage].leftNeighbor" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                </path>
+            </svg>
+            <svg id="r" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                @click="currentImage = images[currentImage].rightNeighbor" v-if="images[currentImage].rightNeighbor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                </path>
+            </svg>
 
         </div>
 
@@ -39,42 +33,50 @@
             createApp({
                 data() {
                     return {
-                        currentImage: 'w1.JPG',
+                        currentImage: 0,
                         images: [
                             {
+                                id: 0,
                                 name: 'w1.JPG',
-                                rightNeighbor: 'w2.JPG',
+                                rightNeighbor: 1,
                                 leftNeighbor: null
                             },
                             {
+                                id: 1,
                                 name: 'w2.JPG',
-                                rightNeighbor: 'w3.JPG',
-                                leftNeighbor: 'w1.JPG'
+                                rightNeighbor: 2,
+                                leftNeighbor: 0
                             },
                             {
+                                id: 2,
                                 name: 'w3.JPG',
-                                rightNeighbor: 'w4.JPG',
-                                leftNeighbor: 'w2.JPG'
+                                rightNeighbor: 3,
+                                leftNeighbor: 1
                             },
                             {
+                                id: 3,
                                 name: 'w4.JPG',
-                                rightNeighbor: 'w5.JPG',
-                                leftNeighbor: 'w3.JPG'
+                                rightNeighbor: 4,
+                                leftNeighbor: 2
                             },
                             {
+                                id: 4,
                                 name: 'w5.JPG',
-                                rightNeighbor: 'w6.JPG',
-                                leftNeighbor: 'w4.JPG'
+                                rightNeighbor: 5,
+                                leftNeighbor: 3
                             },
                             {
+                                id: 5,
                                 name: 'w6.JPG',
-                                rightNeighbor: 'w7.JPG',
-                                leftNeighbor: 'w5.JPG'
+                                rightNeighbor: 6,
+                                leftNeighbor: 4
+
                             },
                             {
+                                id: 6,
                                 name: 'w7.JPG',
                                 rightNeighbor: null,
-                                leftNeighbor: 'w6.JPG'
+                                leftNeighbor: 5
                             }
                         ]
                     }

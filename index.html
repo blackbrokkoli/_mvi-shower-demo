@@ -1,0 +1,149 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+
+
+        <div v-for="image in images">
+            <Transition>
+                <div v-if="currentImage == image.name" class="img-wrapper">
+                    <img :src="'/img/' + image.name">
+                    <svg id="l" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        @click="currentImage = image.leftNeighbor" v-if="image.leftNeighbor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <svg id="r" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        @click="currentImage = image.rightNeighbor" v-if="image.rightNeighbor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3">
+                        </path>
+                    </svg>
+                </div>
+            </Transition>
+
+        </div>
+
+
+        <script>
+            const { createApp } = Vue
+
+            createApp({
+                data() {
+                    return {
+                        currentImage: 'w1.JPG',
+                        images: [
+                            {
+                                name: 'w1.JPG',
+                                rightNeighbor: 'w2.JPG',
+                                leftNeighbor: null
+                            },
+                            {
+                                name: 'w2.JPG',
+                                rightNeighbor: 'w3.JPG',
+                                leftNeighbor: 'w1.JPG'
+                            },
+                            {
+                                name: 'w3.JPG',
+                                rightNeighbor: 'w4.JPG',
+                                leftNeighbor: 'w2.JPG'
+                            },
+                            {
+                                name: 'w4.JPG',
+                                rightNeighbor: 'w5.JPG',
+                                leftNeighbor: 'w3.JPG'
+                            },
+                            {
+                                name: 'w5.JPG',
+                                rightNeighbor: 'w6.JPG',
+                                leftNeighbor: 'w4.JPG'
+                            },
+                            {
+                                name: 'w6.JPG',
+                                rightNeighbor: 'w7.JPG',
+                                leftNeighbor: 'w5.JPG'
+                            },
+                            {
+                                name: 'w7.JPG',
+                                rightNeighbor: null,
+                                leftNeighbor: 'w6.JPG'
+                            }
+                        ]
+                    }
+                },
+
+            }).mount('#app')
+        </script>
+</body>
+
+<style>
+    html,
+    body,
+    div,
+    main,
+    #app {
+        padding: 0;
+        margin: 0;
+        background: #4A3D2F;
+    }
+
+    img {
+        object-fit: contain;
+        width: 100%;
+        height: 70vh;
+        margin-bottom: 400px;
+
+    }
+
+    .img-wrapper {
+        position: relative;
+        margin: auto;
+        height: 70vh;
+        width: 900px;
+        margin-top: 120px;
+    }
+
+    .arrow {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        cursor: pointer;
+        z-index: 1000;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .arrow:hover {
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #l {
+        left: 20px;
+        top: 45%;
+    }
+
+    #r {
+        right: 20px;
+        top: 45%;
+    }
+
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
+</style>
+
+</html>

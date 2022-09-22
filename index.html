@@ -1,6 +1,11 @@
 <html>
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
 </head>
 
@@ -13,7 +18,8 @@
         <div class="img-wrapper">
             <img :src="'/img/' + images[currentImage].name">
             <svg id="l" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                @click="currentImage = images[currentImage].leftNeighbor" v-if="images[currentImage].leftNeighbor" xmlns="http://www.w3.org/2000/svg">
+                @click="currentImage = images[currentImage].leftNeighbor" v-if="images[currentImage].leftNeighbor"
+                xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
                 </path>
             </svg>
@@ -23,6 +29,22 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
                 </path>
             </svg>
+            <div class="icon-wrapper" v-for="icon in images[currentImage].icons">
+
+                <svg class="icon" v-if="icon.type == 'info'" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    @click="showInfo = !showInfo" :style="{top: icon.top, left: icon.left}"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <Transition name="fade">
+                    <span class="infobox" :style="{top: icon.top , left: icon.left}"
+                        v-if="icon.type == 'info' && showInfo">
+                        <h2>{{ icon.title}} </h2>
+                        <p>{{ icon.text }}</p>
+                    </span>
+                </Transition>
+            </div>
 
         </div>
 
@@ -34,6 +56,7 @@
                 data() {
                     return {
                         currentImage: 0,
+                        showInfo: false,
                         images: [
                             {
                                 id: 0,
@@ -45,19 +68,39 @@
                                 id: 1,
                                 name: 'w2.JPG',
                                 rightNeighbor: 2,
-                                leftNeighbor: 0
+                                leftNeighbor: 0,
+
                             },
                             {
                                 id: 2,
                                 name: 'w3.JPG',
                                 rightNeighbor: 3,
-                                leftNeighbor: 1
+                                leftNeighbor: 1,
+                                icons: [
+                                    {
+                                        top: '32%',
+                                        left: '75%',
+                                        type: 'info',
+                                        title: 'Wood in a Shower?',
+                                        text: 'Using outdoor-rated timber and a well-designed ventilation system makes it indeed possible to use wood in a shower. No molding, either!'
+                                    }
+                                ]
+
                             },
                             {
                                 id: 3,
                                 name: 'w4.JPG',
                                 rightNeighbor: 4,
-                                leftNeighbor: 2
+                                leftNeighbor: 2,
+                                icons: [
+                                    {
+                                        top: '32%',
+                                        left: '56%',
+                                        type: 'info',
+                                        title: 'Low Tech, High Brain',
+                                        text: 'After showering, use the rope to pull the window open. It is spring-loaded and will close after a time. Using this, we make sure that the bathroom is ventilated but does not cool down too much.'
+                                    }
+                                ]
                             },
                             {
                                 id: 4,
@@ -76,7 +119,16 @@
                                 id: 6,
                                 name: 'w7.JPG',
                                 rightNeighbor: null,
-                                leftNeighbor: 5
+                                leftNeighbor: 5,
+                                icons: [
+                                    {
+                                        top: '32%',
+                                        left: '65%',
+                                        type: 'info',
+                                        title: 'Mind Circularity',
+                                        text: 'The water from the shower goes back into the nature - thus, we ask you to only use micro-plastics free shampoo. Feel free to use one of the provided bottles that we always stock.'
+                                    }
+                                ]
                             }
                         ]
                     }
@@ -89,19 +141,24 @@
 <style>
     html,
     body,
-    div,
     main,
     #app {
         padding: 0;
         margin: 0;
         background: #4A3D2F;
+        color: #222;
+        font-family: 'Raleway', sans-serif;
     }
 
     img {
         object-fit: contain;
         width: 100%;
         height: 70vh;
-        margin-bottom: 400px;
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
 
     }
 
@@ -111,19 +168,37 @@
         height: 70vh;
         width: 900px;
         margin-top: 120px;
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
     }
 
-    .arrow {
+    .arrow,
+    .icon {
         position: absolute;
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         cursor: pointer;
-        z-index: 1000;
-        color: rgba(255, 255, 255, 0.8);
+        z-index: 10;
+        color: rgba(255, 255, 255, 0.82);
     }
 
-    .arrow:hover {
-        color: rgba(255, 255, 255, 1);
+    .icon-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: fadeInAnimation ease .2s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    .arrow:hover,
+    .icon:hover {
+        color: white;
     }
 
     #l {
@@ -139,12 +214,35 @@
 
     .fade-enter-active,
     .fade-leave-active {
-        transition: opacity 0.5s ease;
+        transition: opacity 0.2s ease;
     }
 
     .fade-enter-from,
     .fade-leave-to {
         opacity: 0;
+    }
+
+    .infobox {
+        background: rgba(255, 255, 255, 0.95);
+        position: absolute;
+        padding: 16px;
+        width: 250px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin-top: 90px;
+        z-index: 2000;
+    }
+
+
+
+    @keyframes fadeInAnimation {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
     }
 </style>
 

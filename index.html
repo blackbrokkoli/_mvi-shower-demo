@@ -14,8 +14,9 @@
 
     <div id="app">
 
-
         <div class="img-wrapper">
+        <h1>Explore the Doppio</h1>
+
             <img :src="'/img/' + images[currentImage].name">
             <svg id="l" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 @click="currentImage = images[currentImage].leftNeighbor" v-if="images[currentImage].leftNeighbor"
@@ -142,12 +143,18 @@
     html,
     body,
     main,
+    h1,
     #app {
         padding: 0;
         margin: 0;
         background: #4A3D2F;
         color: #222;
         font-family: 'Raleway', sans-serif;
+    }
+
+    h1 {
+        color: #ccc;
+        margin-bottom: 24px;
     }
 
     img {

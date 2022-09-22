@@ -17,7 +17,7 @@
         <div class="img-wrapper">
         <h1>Explore the Doppio</h1>
 
-            <img :src="'/img/' + images[currentImage].name">
+            <img :src="'./img/' + images[currentImage].name">
             <svg id="l" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 @click="currentImage = images[currentImage].leftNeighbor" v-if="images[currentImage].leftNeighbor"
                 xmlns="http://www.w3.org/2000/svg">

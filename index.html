@@ -15,17 +15,17 @@
     <div id="app">
 
         <div class="img-wrapper">
-        <h1>Explore the Doppio</h1>
+            <h1>Explore the Doppio</h1>
 
             <img :src="'./img/' + images[currentImage].name">
             <svg id="l" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                @click="currentImage = images[currentImage].leftNeighbor" v-if="images[currentImage].leftNeighbor"
+                @click="currentImage = images[currentImage].leftNeighbor; showInfo = false" v-if="images[currentImage].leftNeighbor || images[currentImage].leftNeighbor == 0"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
                 </path>
             </svg>
             <svg id="r" class="arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                @click="currentImage = images[currentImage].rightNeighbor" v-if="images[currentImage].rightNeighbor"
+                @click="currentImage = images[currentImage].rightNeighbor; showInfo = false" v-if="images[currentImage].rightNeighbor"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
                 </path>
@@ -41,7 +41,16 @@
                 <Transition name="fade">
                     <span class="infobox" :style="{top: icon.top , left: icon.left}"
                         v-if="icon.type == 'info' && showInfo">
-                        <h2>{{ icon.title}} </h2>
+                        <div class="heading-wrapper">
+                            <h2>{{ icon.title}} </h2>
+
+                            <svg class="small-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            @click="showInfo = false"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
                         <p>{{ icon.text }}</p>
                     </span>
                 </Transition>
@@ -69,7 +78,16 @@
                                 id: 1,
                                 name: 'w2.JPG',
                                 rightNeighbor: 2,
-                                leftNeighbor: 0,
+                                icons: [
+                                    {
+                                        top: '75%',
+                                        left: '15%',
+                                        type: 'info',
+                                        title: 'Use Mindfully',
+                                        text: 'Like everything in this bathroom, our sink is connected into the local water cycle. Please do not flush waste or excessive hair in it, for it may clog the system.'
+                                    }
+                                ],
+                                leftNeighbor: 0
 
                             },
                             {
@@ -126,7 +144,7 @@
                                         top: '32%',
                                         left: '65%',
                                         type: 'info',
-                                        title: 'Mind Circularity',
+                                        title: 'Celebrate Circularity',
                                         text: 'The water from the shower goes back into the nature - thus, we ask you to only use micro-plastics free shampoo. Feel free to use one of the provided bottles that we always stock.'
                                     }
                                 ]
@@ -159,8 +177,8 @@
 
     img {
         object-fit: contain;
-        width: 100%;
-        height: 70vh;
+        width: auto;
+        height: 700px;
         user-select: none;
         -moz-user-select: none;
         -khtml-user-select: none;
@@ -172,7 +190,7 @@
     .img-wrapper {
         position: relative;
         margin: auto;
-        height: 70vh;
+        height: 700px;
         width: 900px;
         margin-top: 120px;
         user-select: none;
@@ -192,6 +210,16 @@
         color: rgba(255, 255, 255, 0.82);
     }
 
+    .small-icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+    }
+    .heading-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
     .icon-wrapper {
         position: absolute;
         top: 0;
@@ -210,12 +238,12 @@
 
     #l {
         left: 20px;
-        top: 45%;
+        top: 50%;
     }
 
     #r {
         right: 20px;
-        top: 45%;
+        top: 50%;
     }
 
 
